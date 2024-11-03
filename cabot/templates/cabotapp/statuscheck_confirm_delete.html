@@ -7,12 +7,10 @@
 </form>
 {% endblock %}
 
-{% load compress %}
 {% block js %}
 {{ block.super }}
-{% compress js %}
+% compress js %}
 <script type="text/coffeescript">
 
 </script>
-{% endcompress %}
 {% endblock %}

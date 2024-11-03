@@ -1,0 +1,86 @@
+[project]
+name = "cabot"
+version = "0.12.0"
+description = "Self-hosted, easily-deployable monitoring and alerts service - like a lightweight PagerDuty"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+author = "Arachnys"
+author_email = "info@arachnys.com"
+url = "https://cabotapp.com/"
+dependencies = [
+    "amqp~=5.2.0",
+    "appdirs~=1.4.4",
+    "billiard~=4.2.1",
+    "boto3~=1.35.54",
+    "botocore~=1.35.54",
+    "boto~=2.49.0",
+    "celery[redis]~=5.4.0",
+    "coreapi~=2.3.3",
+    "coreschema~=0.0.4",
+    "dj-database-url~=2.3.0",
+    "django-appconf~=1.0.6",
+    "django-auth-ldap~=5.1.0",
+    "django-autocomplete-light~=3.11.0",
+    "django-bootstrap-form~=3.4",
+    "django-compressor~=4.5.1",
+    "django-filter~=24.3",
+    "django-jsonify~=0.3.0",
+    "django-polymorphic~=3.1.0",
+    "djangorestframework~=3.15.2",
+    "django~=5.1.2",
+    "docutils~=0.21.2",
+    "gevent~=24.10.3",
+    "greenlet~=3.1.1",
+    "gunicorn~=23.0.0",
+    "httplib2~=0.22.0",
+    "icalendar~=6.0.1",
+    "itypes~=1.2.0",
+    "jinja2~=3.1.4",
+    "jmespath~=1.0.1",
+    "kombu~=5.4.2",
+    "markdown~=3.7",
+    "markupsafe~=3.0.2",
+    "multi-key-dict~=2.0.3",
+    "oauthlib~=3.2.2",
+    "packaging~=24.1",
+    "pbr~=6.1.0",
+    "psycopg2~=2.9.10",
+    "pyasn1-modules~=0.4.1",
+    "pyasn1~=0.6.1",
+    "pycurl~=7.45.3",
+    "pygments~=2.18.0",
+    "pyjwt~=2.9.0",
+    "pyparsing~=3.2.0",
+    "pysocks~=1.7.1",
+    "python-dateutil~=2.9.0.post0",
+    "python-jenkins~=1.8.2",
+    "python-ldap~=3.4.4",
+    "python-openid~=2.2.5",
+    "pytz~=2024.2",
+    "rcssmin~=1.1.2",
+    "redis~=5.2.0",
+    "requests-oauthlib~=2.0.0",
+    "requests~=2.32.3",
+    "rjsmin~=1.2.2",
+    "ruff~=0.7.2",
+    "s3transfer~=0.10.3",
+    "six~=1.16.0",
+    "social-auth-app-django~=5.4.2",
+    "social-auth-core~=4.5.4",
+    "twilio~=9.3.6",
+    "uritemplate~=4.1.1",
+    "urllib3~=2.2.3",
+    "vine~=5.1.0",
+    "whitenoise~=6.8.2",
+]
+
+[tool.ruff]
+line-length = 100
+
+[dependency-groups]
+dev = [
+    "coverage~=7.6.4",
+    "django-coverage-plugin~=3.1.0",
+    "freezegun~=1.5.1",
+]

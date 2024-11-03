@@ -19,6 +19,7 @@ conf/*.env
 dist/
 local_config.yml
 build/
+.python-version
 
 .idea
 Pipfile.lock

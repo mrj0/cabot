@@ -1,13 +1,13 @@
 import sys
 
-from django.core.urlresolvers import reverse, clear_url_caches
 from django.conf import settings
 from django.test.utils import override_settings
-from importlib import import_module
+from importlib import import_module, reload
 
-from rest_framework import status, HTTP_HEADER_ENCODING
+from django.urls import clear_url_caches, reverse
 
-from tests_basic import LocalTestCase
+from .tests_basic import LocalTestCase
+
 
 class override_local_settings(override_settings):
     def clear_cache(self):
@@ -34,7 +34,7 @@ class override_local_settings(override_settings):
             COMPRESS_URL="%s/static/" % urlprefix,
             COMPRESS_ENABLED=False,
             COMPRESS_PRECOMPILERS=(),
-            INSTALLED_APPS=installed_apps
+            INSTALLED_APPS=installed_apps,
         )
 
     def __enter__(self):
@@ -45,47 +45,49 @@ class override_local_settings(override_settings):
         super(override_local_settings, self).__exit__(exc_type, exc_value, traceback)
         self.clear_cache()
 
+
 def set_url_prefix_and_custom_check_plugins(prefix, plugins):
     return override_local_settings(prefix, plugins)
+
 
 class URLPrefixTestCase(LocalTestCase):
     def set_url_prefix(self, prefix):
         return override_local_settings(prefix, [])
 
     def test_reverse(self):
-        prefix = '/test'
-        before = reverse('services')
+        prefix = "/test"
+        before = reverse("services")
 
         with self.set_url_prefix(prefix):
-            self.assertNotEqual(reverse('services'), before)
-            self.assertTrue(reverse('services').startswith(prefix))
-            self.assertEqual(reverse('services')[len(prefix):], before)
+            self.assertNotEqual(reverse("services"), before)
+            self.assertTrue(reverse("services").startswith(prefix))
+            self.assertEqual(reverse("services")[len(prefix) :], before)
 
     def test_loginurl(self):
-        prefix = '/test'
+        prefix = "/test"
 
         with self.set_url_prefix(prefix):
             loginurl = str(settings.LOGIN_URL)
-            response = self.client.get(reverse('services'))
+            response = self.client.get(reverse("services"))
 
             self.assertTrue(loginurl.startswith(prefix))
             self.assertTrue(loginurl in response.url)
 
     def test_query(self):
-        prefix = '/test'
+        prefix = "/test"
         self.client.login(username=self.username, password=self.password)
 
-        before_services = self.client.get(reverse('services'))
-        before_systemstatus = self.client.get(reverse('system-status'))
+        before_services = self.client.get(reverse("services"))
+        before_systemstatus = self.client.get(reverse("system-status"))
 
         with self.set_url_prefix(prefix):
-            response = self.client.get(reverse('services'))
+            response = self.client.get(reverse("services"))
 
             self.assertEqual(response.status_code, before_services.status_code)
             self.assertNotEqual(response.content, before_services.content)
 
-            self.assertIn(reverse('services'), response.content)
+            self.assertIn(reverse("services"), response.content)
 
-            response_systemstatus = self.client.get(reverse('system-status'))
+            response_systemstatus = self.client.get(reverse("system-status"))
 
             self.assertEqual(response_systemstatus.status_code, before_systemstatus.status_code)
